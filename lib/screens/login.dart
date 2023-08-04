@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:register_and_login/screens/register.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,6 +21,11 @@ class _LoginState extends State<Login> {
       }
       textFieldFocusNode.canRequestFocus = false;
     });
+  }
+
+  Future goToRegister() async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Register()));
   }
 
   @override
@@ -179,7 +185,7 @@ class _LoginState extends State<Login> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: goToRegister,
                       child: const Text(
                         ' Regístrate',
                         style: TextStyle(

@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    'Inicia Sesión',
+                    'Login',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 45,
@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.blue),
                             borderRadius: BorderRadius.circular(12)),
-                        hintText: 'Email',
+                        hintText: 'Mail',
                         prefixIcon: const Icon(Icons.people_rounded, size: 24),
                         fillColor: Colors.grey[200],
                         filled: true),
@@ -110,7 +110,7 @@ class _LoginState extends State<Login> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.blue),
                             borderRadius: BorderRadius.circular(12)),
-                        hintText: 'Contraseña',
+                        hintText: 'Password',
                         fillColor: Colors.grey[200],
                         filled: true,
                         prefixIcon: const Icon(Icons.lock_rounded, size: 24),
@@ -148,7 +148,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     child: const Text(
-                      'Iniciar Sesión',
+                      'Login',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -165,7 +165,7 @@ class _LoginState extends State<Login> {
                       GestureDetector(
                         onTap: () {},
                         child: const Text(
-                          '¿Ha olvidado su contraseña?',
+                          'Forgot your password?',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -180,14 +180,14 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'No tienes cuenta?',
+                      'don\'t have an account?',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     GestureDetector(
                       onTap: goToRegister,
                       child: const Text(
-                        ' Regístrate',
+                        ' Sign up',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

@@ -87,7 +87,7 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Registrate',
+                    'Sign up',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 45,
@@ -97,7 +97,7 @@ class _RegisterState extends State<Register> {
                     height: 5,
                   ),
                   const Text(
-                    'Formulario de registro',
+                    'Registration Form',
                     style: TextStyle(fontSize: 25, color: Colors.black),
                   ),
                   const SizedBox(
@@ -117,7 +117,7 @@ class _RegisterState extends State<Register> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.green),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Nombre',
+                          hintText: 'Firt name',
                           prefixIcon:
                               const Icon(Icons.people_rounded, size: 24),
                           fillColor: Colors.grey[200],
@@ -140,7 +140,7 @@ class _RegisterState extends State<Register> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.green),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Apellido',
+                          hintText: 'Last name',
                           prefixIcon:
                               const Icon(Icons.people_rounded, size: 24),
                           fillColor: Colors.grey[200],
@@ -164,7 +164,7 @@ class _RegisterState extends State<Register> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.green),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Email',
+                          hintText: 'Mail',
                           prefixIcon: const Icon(Icons.mail, size: 24),
                           fillColor: Colors.grey[200],
                           filled: true),
@@ -190,7 +190,7 @@ class _RegisterState extends State<Register> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.green),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Contraseña',
+                          hintText: 'Password',
                           prefixIcon: const Icon(Icons.lock_rounded, size: 24),
                           suffixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
@@ -228,7 +228,7 @@ class _RegisterState extends State<Register> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.green),
                               borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Repetir contraseña',
+                          hintText: 'Repeat password',
                           prefixIcon: const Icon(Icons.lock_rounded, size: 24),
                           suffixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
@@ -275,7 +275,7 @@ class _RegisterState extends State<Register> {
                             child: TextButton(
                               onPressed: () {},
                               child: const Text(
-                                'He leído y acepto los términos y condiciones de uso',
+                                'I have read and accept the terms and conditions of use.',
                                 style: TextStyle(
                                   color: Colors.black,
                                   decoration: TextDecoration.underline,
@@ -306,7 +306,7 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                       child: const Text(
-                        'Regístrate',
+                        'Sign up',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -318,14 +318,14 @@ class _RegisterState extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Ya tienes cuenta?',
+                        'Already have an account?',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       GestureDetector(
                         onTap: goToLogin,
                         child: const Text(
-                          ' Inicia Sesión',
+                          ' Login',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

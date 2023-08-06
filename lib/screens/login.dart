@@ -1,5 +1,6 @@
 import 'package:custom_signin_buttons/custom_signin_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:register_and_login/screens/forgot_password.dart';
 import 'package:register_and_login/screens/register.dart';
 
 class Login extends StatefulWidget {
@@ -27,6 +28,13 @@ class _LoginState extends State<Login> {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const Register()),
+    );
+  }
+
+  Future<void> goToForgotPassword() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ForgotPassword()),
     );
   }
 
@@ -206,7 +214,7 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: 20),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: goToForgotPassword,
                       child: const Text(
                         'Forgot your password?',
                         style: TextStyle(

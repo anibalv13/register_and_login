@@ -20,9 +20,8 @@ class _RegisterState extends State<Register> {
       _obscured = !_obscured;
       if (textFieldFocusNode.hasPrimaryFocus) {
         return;
-      } // If focus is on text field, dont unfocus
-      textFieldFocusNode.canRequestFocus =
-          false; // Prevents focus if tap on eye
+      }
+      textFieldFocusNode.canRequestFocus = false;
     });
   }
 
@@ -31,9 +30,8 @@ class _RegisterState extends State<Register> {
       _obscured2 = !_obscured2;
       if (textFieldFocusNode2.hasPrimaryFocus) {
         return;
-      } // If focus is on text field, dont unfocus
-      textFieldFocusNode2.canRequestFocus =
-          false; // Prevents focus if tap on eye
+      }
+      textFieldFocusNode2.canRequestFocus = false;
     });
   }
 
@@ -49,296 +47,251 @@ class _RegisterState extends State<Register> {
     return Colors.black;
   }
 
-  Future goToLogin() async {
+  Future<void> goToLogin() async {
     await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Login()));
+      context,
+      MaterialPageRoute(builder: (context) => const Login()),
+    );
+  }
+
+  Widget buildFullNameTextField(double width) {
+    return Padding(
+      padding: width < 500
+          ? const EdgeInsets.symmetric(horizontal: 25.0)
+          : EdgeInsets.symmetric(horizontal: width / 8),
+      child: TextField(
+        /* controller: _nameController, */
+        decoration: buildInputDecoration('Full name', Icons.people_rounded),
+      ),
+    );
+  }
+
+  Widget buildEmailTextField(double width) {
+    return Padding(
+      padding: width < 500
+          ? const EdgeInsets.symmetric(horizontal: 25.0)
+          : EdgeInsets.symmetric(horizontal: width / 8),
+      child: TextField(
+        /* controller: _emailController, */
+        decoration: buildInputDecoration('Email', Icons.mail),
+      ),
+    );
+  }
+
+  Widget buildPasswordTextField(double width, FocusNode focusNode,
+      bool obscured, void Function() toggleFunction) {
+    return Padding(
+      padding: width < 500
+          ? const EdgeInsets.symmetric(horizontal: 25.0)
+          : EdgeInsets.symmetric(horizontal: width / 8),
+      child: TextField(
+        keyboardType: TextInputType.visiblePassword,
+        /* controller: _passwordAController, */
+        obscureText: obscured,
+        focusNode: focusNode,
+        decoration: buildInputDecorationWithVisibilityToggle(
+            'Password', Icons.lock_rounded, obscured, toggleFunction),
+      ),
+    );
+  }
+
+  Widget buildCheckBoxAndTerms(double width) {
+    return Center(
+      child: Padding(
+        padding: width < 500
+            ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10)
+            : EdgeInsets.symmetric(horizontal: width / 8, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Checkbox(
+              checkColor: Colors.white,
+              fillColor: MaterialStateProperty.resolveWith(getColor),
+              value: isChecked,
+              onChanged: (bool? value) {
+                setState(() {
+                  isChecked = value!;
+                });
+              },
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 1.4,
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'I have read and accept the terms and conditions of use.',
+                  style: TextStyle(
+                    color: Colors.black,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildSignUpButton(double width) {
+    return Padding(
+      padding: width < 500
+          ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10)
+          : EdgeInsets.symmetric(horizontal: width / 8, vertical: 10),
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blue,
+          minimumSize: Size(MediaQuery.of(context).size.width, 70),
+          padding: const EdgeInsets.all(10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        child: const Text(
+          'Sign up',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildLoginLink() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          'Already have an account?',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        TextButton(
+          onPressed: goToLogin,
+          child: const Text(
+            'Login',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  InputDecoration buildInputDecoration(String hintText, IconData prefixIcon) {
+    return InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.green),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      hintText: hintText,
+      prefixIcon: Icon(prefixIcon, size: 24),
+      fillColor: Colors.grey[200],
+      filled: true,
+    );
+  }
+
+  InputDecoration buildInputDecorationWithVisibilityToggle(String hintText,
+      IconData prefixIcon, bool obscured, void Function() toggleFunction) {
+    return InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.green),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      hintText: hintText,
+      prefixIcon: Icon(prefixIcon, size: 24),
+      suffixIcon: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+        child: GestureDetector(
+          onTap: toggleFunction,
+          child: Icon(
+            obscured ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+            size: 24,
+          ),
+        ),
+      ),
+      fillColor: Colors.grey[200],
+      filled: true,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xff106ad2),
       ),
       body: Center(
-        child: Stack(children: [
-          Center(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.green,
-                    Colors.blueGrey,
-                    Color.fromRGBO(33, 150, 243, 100),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff106ad2),
+                      Color(0xffa32cdf),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+              ),
+            ),
+            Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Registration Form',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    buildFullNameTextField(width),
+                    const SizedBox(height: 10),
+                    buildEmailTextField(width),
+                    const SizedBox(height: 10),
+                    buildPasswordTextField(
+                        width, textFieldFocusNode, _obscured, _toggleObscured),
+                    const SizedBox(height: 10),
+                    buildPasswordTextField(width, textFieldFocusNode2,
+                        _obscured2, _toggleObscured2),
+                    const SizedBox(height: 10),
+                    buildCheckBoxAndTerms(width),
+                    buildSignUpButton(width),
+                    buildLoginLink(),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
               ),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
-          ),
-          Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Sign up',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 45,
-                        color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    'Registration Form',
-                    style: TextStyle(fontSize: 25, color: Colors.black),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //Nombre completo
-                  Padding(
-                    padding: width < 500
-                        ? const EdgeInsets.symmetric(horizontal: 25.0)
-                        : EdgeInsets.symmetric(horizontal: width / 8),
-                    child: TextField(
-                      /* controller: _nameController, */
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Firt name',
-                          prefixIcon:
-                              const Icon(Icons.people_rounded, size: 24),
-                          fillColor: Colors.grey[200],
-                          filled: true),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: width < 500
-                        ? const EdgeInsets.symmetric(horizontal: 25.0)
-                        : EdgeInsets.symmetric(horizontal: width / 8),
-                    child: TextField(
-                      /* controller: _nameController, */
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Last name',
-                          prefixIcon:
-                              const Icon(Icons.people_rounded, size: 24),
-                          fillColor: Colors.grey[200],
-                          filled: true),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //Email
-                  Padding(
-                    padding: width < 500
-                        ? const EdgeInsets.symmetric(horizontal: 25.0)
-                        : EdgeInsets.symmetric(horizontal: width / 8),
-                    child: TextField(
-                      /*  controller: _emailController, */
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Mail',
-                          prefixIcon: const Icon(Icons.mail, size: 24),
-                          fillColor: Colors.grey[200],
-                          filled: true),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //Contraseña
-                  Padding(
-                    padding: width < 500
-                        ? const EdgeInsets.symmetric(horizontal: 25.0)
-                        : EdgeInsets.symmetric(horizontal: width / 8),
-                    child: TextField(
-                      keyboardType: TextInputType.visiblePassword,
-                      /* controller: _passwordAController, */
-                      obscureText: _obscured,
-                      focusNode: textFieldFocusNode,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_rounded, size: 24),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                            child: GestureDetector(
-                              onTap: _toggleObscured,
-                              child: Icon(
-                                _obscured
-                                    ? Icons.visibility_rounded
-                                    : Icons.visibility_off_rounded,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                          fillColor: Colors.grey[200],
-                          filled: true),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // Repetir Contraseña
-                  Padding(
-                    padding: width < 500
-                        ? const EdgeInsets.symmetric(horizontal: 25.0)
-                        : EdgeInsets.symmetric(horizontal: width / 8),
-                    child: TextField(
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: _obscured2,
-                      focusNode: textFieldFocusNode2,
-                      /*  controller: _passwordBController, */
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(12)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
-                              borderRadius: BorderRadius.circular(12)),
-                          hintText: 'Repeat password',
-                          prefixIcon: const Icon(Icons.lock_rounded, size: 24),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                            child: GestureDetector(
-                              onTap: _toggleObscured2,
-                              child: Icon(
-                                _obscured2
-                                    ? Icons.visibility_rounded
-                                    : Icons.visibility_off_rounded,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                          fillColor: Colors.grey[200],
-                          filled: true),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: width < 500
-                          ? const EdgeInsets.symmetric(
-                              horizontal: 25.0, vertical: 10)
-                          : EdgeInsets.symmetric(
-                              horizontal: width / 8, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Checkbox(
-                            checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.4,
-                            child: TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'I have read and accept the terms and conditions of use.',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: width < 500
-                        ? const EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 10)
-                        : EdgeInsets.symmetric(
-                            horizontal: width / 8, vertical: 10),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        minimumSize: Size(MediaQuery.of(context).size.width,
-                            70), // Tamaño mínimo del botón
-                        padding: const EdgeInsets.all(
-                            10), // Espaciado interno del botón
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        'Sign up',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Already have an account?',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                      GestureDetector(
-                        onTap: goToLogin,
-                        child: const Text(
-                          ' Login',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          )
-        ]),
+            )
+          ],
+        ),
       ),
     );
   }

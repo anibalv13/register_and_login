@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:register_and_login/commons/routes.dart';
-import 'package:register_and_login/screens/login.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -46,13 +45,6 @@ class _RegisterState extends State<Register> {
       return Colors.blue;
     }
     return Colors.black;
-  }
-
-  Future<void> goToLogin() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Login()),
-    );
   }
 
   Widget buildFullNameTextField(double width) {

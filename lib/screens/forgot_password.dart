@@ -30,12 +30,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  Future<void> goToLogin() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Login()),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

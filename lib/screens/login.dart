@@ -25,19 +25,6 @@ class _LoginState extends State<Login> {
     });
   }
 
-  Future<void> goToRegister() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Register()),
-    );
-  }
-
-  Future<void> goToForgotPassword() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const ForgotPassword()),
-    );
-  }
 
   InputDecoration buildInputDecoration(String hintText, IconData prefixIcon) {
     return InputDecoration(

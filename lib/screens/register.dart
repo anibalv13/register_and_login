@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:register_and_login/commons/routes.dart';
 import 'package:register_and_login/screens/login.dart';
 
 class Register extends StatefulWidget {
@@ -172,7 +173,7 @@ class _RegisterState extends State<Register> {
           ),
         ),
         TextButton(
-          onPressed: goToLogin,
+          onPressed: () => Navigator.pushNamed(context, ROUTE_LOGIN),
           child: const Text(
             'Login',
             style: TextStyle(

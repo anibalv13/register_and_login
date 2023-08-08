@@ -1,5 +1,6 @@
 import 'package:custom_signin_buttons/custom_signin_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:register_and_login/commons/routes.dart';
 import 'package:register_and_login/screens/forgot_password.dart';
 import 'package:register_and_login/screens/register.dart';
 
@@ -214,7 +215,8 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: 20),
                     TextButton(
-                      onPressed: goToForgotPassword,
+                      onPressed: () =>
+                          Navigator.pushNamed(context, ROUTE_FORGOT_PASSWORD),
                       child: const Text(
                         'Forgot your password?',
                         style: TextStyle(
@@ -236,7 +238,8 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         TextButton(
-                          onPressed: goToRegister,
+                          onPressed: () =>
+                              Navigator.pushNamed(context, ROUTE_REGISTER),
                           child: const Text(
                             'Sign up',
                             style: TextStyle(

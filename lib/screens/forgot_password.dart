@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:register_and_login/commons/routes.dart';
 import 'package:register_and_login/screens/login.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -108,7 +109,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       const SizedBox(height: 10),
                       TextButton(
-                        onPressed: goToLogin,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, ROUTE_LOGIN),
                         child: const Text(
                           'Back to home',
                           style: TextStyle(

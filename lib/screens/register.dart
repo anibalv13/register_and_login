@@ -14,6 +14,11 @@ class _RegisterState extends State<Register> {
   bool _obscured = true;
   final textFieldFocusNode2 = FocusNode();
   bool _obscured2 = true;
+  TextEditingController passwordCtrl = TextEditingController();
+  TextEditingController repeatPassCtrl = TextEditingController();
+  TextEditingController nameCtrl = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey();
 
   void _toggleObscured() {
     setState(() {
@@ -47,43 +52,86 @@ class _RegisterState extends State<Register> {
     return Colors.black;
   }
 
-  Widget buildFullNameTextField(double width) {
+  Widget buildFullNameTextFomrField(double width) {
     return Padding(
       padding: width < 500
           ? const EdgeInsets.symmetric(horizontal: 25.0)
           : EdgeInsets.symmetric(horizontal: width / 8),
-      child: TextField(
-        /* controller: _nameController, */
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Name is required";
+          }
+          return null;
+        },
+        controller: nameCtrl,
         decoration: buildInputDecoration('Full name', Icons.people_rounded),
       ),
     );
   }
 
-  Widget buildEmailTextField(double width) {
+  Widget buildEmailTextFormField(double width) {
     return Padding(
       padding: width < 500
           ? const EdgeInsets.symmetric(horizontal: 25.0)
           : EdgeInsets.symmetric(horizontal: width / 8),
-      child: TextField(
-        /* controller: _emailController, */
+      child: TextFormField(
+        validator: (value) {
+          String pattern =
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+          RegExp regExp = RegExp(pattern);
+          if (value!.isEmpty) {
+            return "Email is required";
+          } else if (!regExp.hasMatch(value.toString())) {
+            return "Invalid email";
+          }
+
+          return null;
+        },
+        keyboardType: TextInputType.emailAddress,
+        controller: emailCtrl,
         decoration: buildInputDecoration('Email', Icons.mail),
       ),
     );
   }
 
-  Widget buildPasswordTextField(double width, FocusNode focusNode,
+  Widget buildPasswordTextFormField(double width, FocusNode focusNode,
       bool obscured, void Function() toggleFunction) {
     return Padding(
       padding: width < 500
           ? const EdgeInsets.symmetric(horizontal: 25.0)
           : EdgeInsets.symmetric(horizontal: width / 8),
-      child: TextField(
+      child: TextFormField(
         keyboardType: TextInputType.visiblePassword,
-        /* controller: _passwordAController, */
+        controller: passwordCtrl,
         obscureText: obscured,
         focusNode: focusNode,
         decoration: buildInputDecorationWithVisibilityToggle(
             'Password', Icons.lock_rounded, obscured, toggleFunction),
+      ),
+    );
+  }
+
+  Widget buildPasswordTextFormField2(double width, FocusNode focusNode,
+      bool obscured, void Function() toggleFunction) {
+    return Padding(
+      padding: width < 500
+          ? const EdgeInsets.symmetric(horizontal: 25.0)
+          : EdgeInsets.symmetric(horizontal: width / 8),
+      child: TextFormField(
+        keyboardType: TextInputType.visiblePassword,
+        controller: repeatPassCtrl,
+        validator: (value) {
+          if (value != passwordCtrl.text.toString()) {
+            return "Passwords do not match";
+          }
+
+          return null;
+        },
+        obscureText: obscured,
+        focusNode: focusNode,
+        decoration: buildInputDecorationWithVisibilityToggle(
+            'Repeat Password', Icons.lock_rounded, obscured, toggleFunction),
       ),
     );
   }
@@ -132,7 +180,7 @@ class _RegisterState extends State<Register> {
           ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10)
           : EdgeInsets.symmetric(horizontal: width / 8, vertical: 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => save(),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue,
           minimumSize: Size(MediaQuery.of(context).size.width, 70),
@@ -181,6 +229,7 @@ class _RegisterState extends State<Register> {
 
   InputDecoration buildInputDecoration(String hintText, IconData prefixIcon) {
     return InputDecoration(
+      errorStyle: const TextStyle(color: Colors.white),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.grey),
         borderRadius: BorderRadius.circular(30),
@@ -199,6 +248,7 @@ class _RegisterState extends State<Register> {
   InputDecoration buildInputDecorationWithVisibilityToggle(String hintText,
       IconData prefixIcon, bool obscured, void Function() toggleFunction) {
     return InputDecoration(
+      errorStyle: const TextStyle(color: Colors.white),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.grey),
         borderRadius: BorderRadius.circular(30),
@@ -254,32 +304,35 @@ class _RegisterState extends State<Register> {
             ),
             Center(
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Registration Form',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Registration Form',
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    buildFullNameTextField(width),
-                    const SizedBox(height: 10),
-                    buildEmailTextField(width),
-                    const SizedBox(height: 10),
-                    buildPasswordTextField(
-                        width, textFieldFocusNode, _obscured, _toggleObscured),
-                    const SizedBox(height: 10),
-                    buildPasswordTextField(width, textFieldFocusNode2,
-                        _obscured2, _toggleObscured2),
-                    const SizedBox(height: 10),
-                    buildCheckBoxAndTerms(width),
-                    buildSignUpButton(width),
-                    buildLoginLink(),
-                  ],
+                      const SizedBox(height: 15),
+                      buildFullNameTextFomrField(width),
+                      const SizedBox(height: 10),
+                      buildEmailTextFormField(width),
+                      const SizedBox(height: 10),
+                      buildPasswordTextFormField(width, textFieldFocusNode,
+                          _obscured, _toggleObscured),
+                      const SizedBox(height: 10),
+                      buildPasswordTextFormField2(width, textFieldFocusNode2,
+                          _obscured2, _toggleObscured2),
+                      const SizedBox(height: 10),
+                      buildCheckBoxAndTerms(width),
+                      buildSignUpButton(width),
+                      buildLoginLink(),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -287,5 +340,11 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  save() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState?.reset();
+    }
   }
 }
